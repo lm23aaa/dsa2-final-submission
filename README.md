@@ -1,2 +1,3 @@
-# dsa2-final-submission
-This repo is for the coursework submission of DSA2 of me (Liam Mills). Enclosed is a library of python functions as requested in the coursework brief.
+# Data Structures & Algorithms 2 (University of Hertfordshire)
+## By Liam Mills (lm23aaa@herts.ac.uk)
+This repository contains my DSA2 coursework submission. It includes a library of Python functions as specified in the coursework brief.
