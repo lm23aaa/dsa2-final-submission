@@ -8,7 +8,7 @@ Last Modified: 2025-10-16
 Implements recursive and iterative functions related to the Collatz conjecture.
 
 Functions:
-    collatz(n): Return the result of the Collatz sequence starting from n down to 1.
+    - collatz(n: int) -> int: Return the result of the Collatz sequence starting from n down to 1.
 """
 
 def collatz(n: int) -> int:
@@ -24,14 +24,14 @@ def collatz(n: int) -> int:
           n / 2 as the arguement.
 
     Args:
-        n (integer): Positive integer larger than one.
+        - n (integer): Positive integer larger than one.
 
     Returns:
-        integer: The final value of 1. If a number lower than 1
+        - integer: The final value of 1. If a number lower than 1
         is supplied, -1 is returned.
 
     Side Effects:
-        Prints the value of n at each iteration, or an error
+        - Prints the value of n at each iteration, or an error
         message if a number lower than 1 is supplied.
     """
 

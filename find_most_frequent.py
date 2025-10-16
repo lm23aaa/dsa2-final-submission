@@ -9,11 +9,11 @@ Implements functions that find the most frequent words from arrays based on vari
 other functions to support them.
 
 Functions:
-    findMostFrequentWord(inputList1: list[str], inputList2: list[str]) -> str: Returns a string of the most
+    - findMostFrequentWord(inputList1: list[str], inputList2: list[str]) -> str: Returns a string of the most
     frequent word in inputList1 that does not appear in inputList2.
-    findMostFrequentFollower(inputList: list[str], targetWord: str) -> str: Returns a string of the most
+    - findMostFrequentFollower(inputList: list[str], targetWord: str) -> str: Returns a string of the most
     frequent following word of the targetWord, based on the inputList of strings.
-    findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first") -> str: Returns a string of
+    - findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first") -> str: Returns a string of
     the key of the item in a dictionary with the highest value.
 """
 
@@ -24,17 +24,17 @@ def findMostFrequentWord(inputList1: list[str], inputList2: list[str]) -> str:
     array inputList1
 
     Args:
-        inputList1 (list of strings): List of strings.
-        inputList2 (list of strings): List of strings.
+        - inputList1 (list of strings): List of strings.
+        - inputList2 (list of strings): List of strings.
 
     Returns:
-        string: The word with the highest frequency count, or if
+        - string: The word with the highest frequency count, or if
         an error occurs, the string of "-1" is returned. If there are
         multiple words with the same count, then the first word with
         that count will be returned.
 
     Side Effects:
-        Prints error messages to the console.
+        - Prints error messages to the console.
     """
 
     # if input arrays don't contain values, return error code
@@ -75,17 +75,17 @@ def findMostFrequentFollower(inputList: list[str], targetWord: str) -> str:
     a target word
 
     Args:
-        inputList1 (list of strings): List of strings.
-        targetWord (string): String used as the target word of the function.
+        - inputList1 (list of strings): List of strings.
+        - targetWord (string): String used as the target word of the function.
 
     Returns:
-        string: The word with the highest frequency count, or if
+        - string: The word with the highest frequency count, or if
         an error occurs, the string of "-1" is returned. If there are
         multiple words with the same count, then the last word with
         that count will be returned.
 
     Side Effects:
-        Prints error messages to the console.
+        - Prints error messages to the console.
     """
 
     # if input arrays don't contain values, return error code
@@ -121,16 +121,16 @@ def findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first")
     output the first or last element with that value.
 
     Args:
-        dictionary (dictionary): Dictionary with string keys and int values.
+        - dictionary (dictionary): Dictionary with string keys and int values.
         target (string): String with the value of first or last, to
         target the output position.
 
     Returns:
-        string: The key of the item with the highest value, or if
+        - string: The key of the item with the highest value, or if
         an error occurs, the string of "-1" is returned. 
 
     Side Effects:
-        Prints error messages to the console.
+        - Prints error messages to the console.
     """
 
     # if dictionary size is zero, return error code
@@ -149,3 +149,12 @@ def findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first")
     array_of_max_values = [key for key, value in dictionary.items() if value == max_value]
 
     return array_of_max_values[0 if target == "first" else -1]
+
+
+
+# print(findMostFrequentWord(['test', 'b', 'test', 'three', 'four', 'fivef', 'b', 'fivef', 'fivef', 'bc'], ['three', 'four', 'fivef']))
+
+# arr = ["This", "is", "the", "way", ".", "The", "way", "is", "shut", ".", "The", "door", "is", "the", "end", "."]
+# print(findMostFrequentFollower(arr, "the"))
+# print(findMostFrequentFollower(arr, "is"))
+# print(findMostFrequentFollower(arr, "door"))
