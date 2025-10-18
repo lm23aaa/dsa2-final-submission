@@ -64,7 +64,8 @@ def kruskal(graph: nx.Graph) -> None:
     mst_title = ""
 
     # run a loop till the mst_node_count is the same as mst_node_target
-    while mst_node_count < mst_node_target:
+    # or, the edges is less than the node_target - 1 (edges = nodes - 1)
+    while mst_node_count < mst_node_target or len(mst.edges()) != mst_node_target - 1:
         # Get first element from sorted list
         # desctructure it so the variables are easier to read
         # please note: weight value is inside data
@@ -74,7 +75,7 @@ def kruskal(graph: nx.Graph) -> None:
         mst.add_weighted_edges_from([(node_one, node_two, data["weight"])])
 
         # check if mst is still a tree
-        if nx.is_tree(mst):
+        if nx.is_tree(mst) or nx.is_connected(mst) == False:
             # true, update the node count
             mst_node_count = len(mst.nodes())
 
