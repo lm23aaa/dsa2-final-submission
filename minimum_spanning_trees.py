@@ -3,7 +3,7 @@ minimum_spanning_trees.py
 
 Author: Liam Mills
 Created: 2025-10-16
-Last Modified: 2025-10-16
+Last Modified: 2025-10-18
 
 Implements functions to work out the minimum spanning trees with famous algorithm(s), and supporting functions
 for them.
@@ -40,7 +40,7 @@ def kruskal(graph: nx.Graph) -> None:
     """
 
     # state the algoritm being used
-    print("The algorithm used to create this MST is Kruskal's algorithm, and it will be on the following graph.")
+    print("The algorithm used to create this Minimum Spanning Tree (MST) is Kruskal's algorithm, and it will be on the following graph.")
         
     # draw the original graph
     drawAndShowGraph(graph, "#0000ff", "Original Connected Graph")
@@ -86,9 +86,13 @@ def kruskal(graph: nx.Graph) -> None:
                 mst_title = f"Final MST, weight: {mst_weight}"
             else:
                 mst_title = f"Current MST, weight: {mst_weight}"
+
+            # inform the user on the success
+            print(f"Edge ({node_one}, {node_two}, weight={data["weight"]}) can be added to the MST.")
         
             # draw the mst at each successful step
             drawAndShowGraph(mst, title=mst_title)
+            
         else:
             # false, remove the node we just added
             mst.remove_edge(node_one, node_two)
@@ -106,6 +110,9 @@ def kruskal(graph: nx.Graph) -> None:
 
             # update mst node count
             mst_node_count = len(mst.nodes())
+
+            # inform the user on the failure
+            print(f"Edge ({node_one}, {node_two}, weight={data["weight"]}) cannot be added to the MST, as it creates a circuit.")
 
     # print the MST size for the user
     print(f"The final MST weight is {mst_weight}")
