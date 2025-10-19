@@ -83,7 +83,7 @@ def kruskal(graph: nx.Graph) -> None:
             mst_weight += data["weight"]
 
             # update the mst_title
-            if mst_node_count == mst_node_target:
+            if mst_node_count == mst_node_target and len(mst.edges()) == mst_node_target - 1:
                 mst_title = f"Final MST, weight: {mst_weight}"
             else:
                 mst_title = f"Current MST, weight: {mst_weight}"
