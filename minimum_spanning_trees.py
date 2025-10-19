@@ -47,8 +47,6 @@ def kruskal(graph: nx.Graph) -> None:
 
     # Get edges from graph, put them in sorted order
     sorted_edges = sorted(graph.edges(data=True), key=getEdgesWeight)
-
-    print(sorted_edges)
     
     # Get the amount of nodes in the mst
     mst_node_target = len(graph.nodes())
