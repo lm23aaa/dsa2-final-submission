@@ -3,7 +3,7 @@ minimum_spanning_trees.py
 
 Author: Liam Mills
 Created: 2025-10-16
-Last Modified: 2025-10-18
+Last Modified: 2025-10-19
 
 Implements functions to work out the minimum spanning trees with famous algorithm(s), and supporting functions
 for them.
@@ -47,6 +47,8 @@ def kruskal(graph: nx.Graph) -> None:
 
     # Get edges from graph, put them in sorted order
     sorted_edges = sorted(graph.edges(data=True), key=getEdgesWeight)
+
+    print(sorted_edges)
     
     # Get the amount of nodes in the mst
     mst_node_target = len(graph.nodes())
@@ -184,10 +186,10 @@ G.add_weighted_edges_from([
     ("a", "c", 33),
     ("a", "d", 51),
     ("b", "c", 5),
-    ("b", "e", 49),
+    ("b", "e", 39),
     ("c", "d", 98),
     ("c", "f", 12),
-    ("d", "e", 39),
+    ("d", "e", 49),
     ("e", "f", 15),
     ("e", "g", 8),
     ("f", "g", 19),
