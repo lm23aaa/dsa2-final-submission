@@ -54,10 +54,10 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
     while len(positions_to_process):
         # get current postion data fomr the last element in
         # the positions_to_process array
-        current_row = positions_to_process[-1]['row']
-        current_col = positions_to_process[-1]['col']
-        step_count = positions_to_process[-1]['step_count']
-        next_step_index = positions_to_process[-1]['next_step_index']
+        current_row = positions_to_process[0]['row']
+        current_col = positions_to_process[0]['col']
+        step_count = positions_to_process[0]['step_count']
+        next_step_index = positions_to_process[0]['next_step_index']
         
         # if set_count equals target steps
         # we are at the end point
@@ -78,7 +78,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
 
             # up the current elements next_step_index incase we need
             # to backtrack
-            positions_to_process[-1]['next_step_index'] += 1
+            positions_to_process[0]['next_step_index'] += 1
             
             # if the new row and col coordinates are possible moves
             # and the coordinate on the board is zero
@@ -87,7 +87,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
                 board[new_row][new_col] = step_count + 1
                 # add this element to the positions_to_process to start
                 # looking through moves from there
-                positions_to_process.append({
+                positions_to_process.insert(0, {
                     'row': new_row,
                     'col': new_col,
                     'step_count': step_count + 1,
@@ -100,7 +100,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             # possible_moves array, so there are no moves left to make
             # the current item is not working so we need to backtrack
             # remove this item from positions_to_process
-            removed = positions_to_process.pop()
+            removed = positions_to_process.pop(0)
 
             # remove this from the board
             board[removed['row']][removed['col']] = 0
@@ -120,4 +120,4 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
         # else, return failure results
         return (False, [[-1]])
 
-# print(KnightsTourBacktracking((0,0)))
+print(KnightsTourBacktracking((0,0)))
