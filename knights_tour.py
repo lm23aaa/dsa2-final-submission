@@ -1,18 +1,21 @@
 import numpy as np
 
 def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]:
-    # board size
-    board_size = 5
+    # board size (minimum board size is 6 for closed)
+    board_size = 6
+
+    # board area
+    board_area = board_size * board_size
 
     # target step count
-    target_steps = board_size * board_size
+    target_steps = board_area + 1
 
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
 
     # define board of zeros, set all to 0, with the initial
     # step set to one
-    board = np.zeros((board_size, board_size))
+    board = np.zeros((board_size, board_size), dtype=int)
     board[start_row][start_col] = 1
 
     # array of possible moves the knight can take
@@ -82,9 +85,13 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             
             # if the new row and col coordinates are possible moves
             # and the coordinate on the board is zero
-            if new_row >= 0 and new_col >= 0 and new_row < board_size and new_col < board_size and board[new_row][new_col] == 0:
+            # OR, the tour is at the last step, and that it is going back to the 
+            # first spot
+            if (new_row >= 0 and new_col >= 0 and new_row < board_size and new_col < board_size and board[new_row][new_col] == 0) or (step_count == board_area and new_row == start_row and new_col == start_col and board[new_row][new_col] == 1):
                 # up the space on the board with the step count
-                board[new_row][new_col] = step_count + 1
+                # if it is not the last move
+                if step_count + 1 != target_steps:
+                    board[new_row][new_col] = step_count + 1
                 # add this element to the positions_to_process to start
                 # looking through moves from there
                 positions_to_process.insert(0, {
@@ -113,11 +120,11 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
 
     # if the non zeros in the board and the length of position_order
     # eaual the target_steps
-    if np.count_nonzero(board) == target_steps and len(position_order) == target_steps:
+    if np.count_nonzero(board) == board_area and len(position_order) == target_steps:
         # return the success boolean and position_order array
         return (True, position_order)
     else:
         # else, return failure results
         return (False, [[-1]])
 
-print(KnightsTourBacktracking((0,0)))
+print(KnightsTourBacktracking((2,2)))
