@@ -1,5 +1,15 @@
 import numpy as np
 
+# CONSTANTS
+# board size (minimum board size is 6 for closed)
+BOARD_SIZE = 6
+
+# board area
+BOARD_AREA = BOARD_SIZE * BOARD_SIZE
+
+# target step count
+TARGET_STEPS = BOARD_AREA + 1
+
 def KnightsTour():
     should_outer_loop = True
 
@@ -38,7 +48,8 @@ def KnightsTour():
                     
                     message = "success" if bool else "failure"
 
-                    print(f"Your run was a {message}.\nThe route that was taken was: {arr}\n")
+                    print(f"\nYour run was a {message}.")
+                    KnightsTourPrintBoard(arr)
 
             print("Your tour has finished, the program will return to the main menu.\n")
 
@@ -48,24 +59,9 @@ def KnightsTour():
 
     print("Thank you for using the Knights Tour by Liam Mills, goodbye!")
 
-
 def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]:
-    # board size (minimum board size is 6 for closed)
-    board_size = 6
-
-    # board area
-    board_area = board_size * board_size
-
-    # target step count
-    target_steps = board_area + 1
-
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
-
-    # define board of zeros, set all to 0, with the initial
-    # step set to one
-    board = np.zeros((board_size, board_size), dtype=int)
-    board[start_row][start_col] = 1
 
     # array of possible moves the knight can take
     # the knight can move in an L shape of 1 square along
@@ -113,7 +109,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
         
         # if set_count equals target steps
         # we are at the end point
-        if step_count == target_steps:
+        if step_count == TARGET_STEPS:
             # exit while if it hasn't already
             break
         
@@ -136,11 +132,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             # and the coordinate on the board is zero
             # OR, the tour is at the last step, and that it is going back to the 
             # first spot
-            if (new_row >= 0 and new_col >= 0 and new_row < board_size and new_col < board_size and board[new_row][new_col] == 0) or (step_count == board_area and new_row == start_row and new_col == start_col and board[new_row][new_col] == 1):
-                # up the space on the board with the step count
-                # if it is not the last move
-                if step_count + 1 != target_steps:
-                    board[new_row][new_col] = step_count + 1
+            if (new_row >= 0 and new_col >= 0 and new_row < BOARD_SIZE and new_col < BOARD_SIZE and [new_row,new_col] not in position_order) or (step_count == BOARD_AREA and new_row == start_row and new_col == start_col):
                 # add this element to the positions_to_process to start
                 # looking through moves from there
                 positions_to_process.insert(0, {
@@ -158,36 +150,17 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             # remove this item from positions_to_process
             removed = positions_to_process.pop(0)
 
-            # remove this from the board
-            board[removed['row']][removed['col']] = 0
-
             # remove from position_order
             position_order.remove([removed['row'], removed['col']])
 
-    # print final board
-    print(f"\nFinal board layout: \n{board}\n")
-
-    # if the non zeros in the board and the length of position_order
-    # eaual the target_steps
-    return (bool(np.count_nonzero(board) == board_area and len(position_order) == target_steps), position_order)
+    # return tuple of:
+    # boolean: if the length of position_order equal the TARGET_STEPS
+    # list[list[int]]: the order in which we toured the board
+    return (len(position_order) == TARGET_STEPS, position_order)
     
 def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]:
-    # board size (minimum board size is 6 for closed)
-    board_size = 6
-
-    # board area
-    board_area = board_size * board_size
-
-    # target step count
-    target_steps = board_area + 1
-
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
-
-    # define board of zeros, set all to 0, with the initial
-    # step set to one
-    board = np.zeros((board_size, board_size), dtype=int)
-    board[start_row][start_col] = 1
 
     # array of possible moves the knight can take
     # the knight can move in an L shape of 1 square along
@@ -235,7 +208,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         # if set_count equals target steps
         # or the items has been attempted in all child options
         # we are at the end point
-        if step_count == target_steps or len(attempted_positions) == 8:
+        if step_count == TARGET_STEPS or len(attempted_positions) == 8:
             # exit while if it hasn't already
             break
         
@@ -267,11 +240,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         # and the coordinate on the board is zero
         # OR, the tour is at the last step, and that it is going back to the 
         # first spot
-        if (new_row >= 0 and new_col >= 0 and new_row < board_size and new_col < board_size and board[new_row][new_col] == 0) or (step_count == board_area and new_row == start_row and new_col == start_col and board[new_row][new_col] == 1):
-            # up the space on the board with the step count
-            # if it is not the last move
-            if step_count + 1 != target_steps:
-                board[new_row][new_col] = step_count + 1
+        if (new_row >= 0 and new_col >= 0 and new_row < BOARD_SIZE and new_col < BOARD_SIZE and [new_row,new_col] not in position_order) or (step_count == BOARD_AREA and new_row == start_row and new_col == start_col):
             # add this element to the positions_to_process to start
             # looking through moves from there
             positions_to_process.insert(0, {
@@ -284,12 +253,29 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
             # empty attempted_positions for next position to process
             attempted_positions = []
 
-    # print final board
-    print(f"\nFinal board layout: \n{board}\n")
+    # return tuple of:
+    # boolean: if the length of position_order equal the TARGET_STEPS
+    # list[list[int]]: the order in which we toured the board
+    return (len(position_order) == TARGET_STEPS, position_order)
 
-    # if the non zeros in the board and the length of position_order
-    # eaual the target_steps
-    return (bool(np.count_nonzero(board) == board_area and len(position_order) == target_steps), position_order)
+def KnightsTourPrintBoard(visited: list[list[int]]) -> None:
+    # define board of zeros, set all to 0
+    board = np.zeros((BOARD_SIZE, BOARD_SIZE), dtype=int)
+
+    # loop termination number
+    terminator = len(visited) - 1 if TARGET_STEPS == len(visited) else len(visited)
+
+    for i in range(0, terminator):
+        # get the row and column value
+        (row, col) = visited[i]
+
+        # place it on the board
+        board[row][col] = i + 1
+
+    # print final board
+    print(f"Your final board layout was: \n{board}\n")
+
+    return
 
 # print(KnightsTourLasVegas((2,2)))
 KnightsTour()
