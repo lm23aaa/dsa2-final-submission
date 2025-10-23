@@ -279,10 +279,10 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
 
             # if these coordinates have not already been attempted
             # set vars, else the loop will retry
-            if (index not in attempted_positions):
+            if (int(index) not in attempted_positions):
                 add_row = row
                 add_col = col
-                attempted_positions.append(index)
+                attempted_positions.append(int(index))
                 loop_for_next_attempt = False
 
         # create new coordinates by adding the move values
