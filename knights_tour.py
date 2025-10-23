@@ -249,7 +249,8 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
     # to output at the end of the function
     position_order = [[start_row, start_col]]
 
-    # attempt array for each step
+    # array to hold all attempted movements from current
+    # step, based on possible_moves values
     attempted_positions = []
 
     while len(positions_to_process):
@@ -260,25 +261,24 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         step_count = positions_to_process[0]['step_count']
         
         # if set_count equals target steps
-        # or the items has been attempted in all child options
-        # we are at the end point
+        # or the possible_moves have been attempted in 
+        # attempted_positions, then we are at the end point
         if step_count == TARGET_STEPS or len(attempted_positions) == 8:
-            # exit while if it hasn't already
+            # exit the main loop
             break
         
-        # set variables for the next attempt 
-        # addition variable loop
+        # set variables for the next attempt loop
         loop_for_next_attempt = True
         add_row = 0
         add_col = 0
 
         while loop_for_next_attempt:
-            # randomly get the index for the possible moves array
+            # randomly get the index for the possible_moves array
             index = np.random.randint(0, len(possible_moves), 1)[0]
             (row, col) = possible_moves[index]
 
             # if these coordinates have not already been attempted
-            # set vars, else retry
+            # set vars, else the loop will retry
             if (index not in attempted_positions):
                 add_row = row
                 add_col = col
