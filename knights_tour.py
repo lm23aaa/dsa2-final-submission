@@ -1,3 +1,20 @@
+"""
+knights_tour.py
+
+Author: Liam Mills
+Created: 2025-10-21
+Last Modified: 2025-10-23
+
+Implements various functions related to the closed Knight's tour problem.
+
+Functions:
+    - KnightsTour() -> None: Function for users to interact with the main Knight's tour functions in this file.
+    - KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]: Function that runs through the closed Knight's tour problem using a backtracking algorithm.
+    - KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]: Function that runs through the closed Knight's tour problem using a Las Vegas algorithm.
+    - KnightsTourPrintBoard(visited: list[list[int]]) -> None: Function that takes a list of list of ints as positions on the board, and uses them to output in the console a representation of the movements around the board during the Knight's tour.
+    - KnightsTourSuccessRate(type: str, max: int) -> float: Function that runs the Knight's tour algorithm repeatedly, with random start positions to determine the success rate of the algorithm.
+"""
+
 import numpy as np
 
 # CONSTANTS
@@ -10,7 +27,7 @@ BOARD_AREA = BOARD_SIZE * BOARD_SIZE
 # target step count
 TARGET_STEPS = BOARD_AREA + 1
 
-def KnightsTour():
+def KnightsTour() -> None:
     should_outer_loop = True
 
     print("Welcome to the Knights Tour by Liam Mills.")
@@ -41,6 +58,9 @@ def KnightsTour():
 
                     should_inner_loop = False
 
+                    print(f"\nYour starting board layout was:")
+                    KnightsTourPrintBoard([[row, col]])
+
                     if tour_type == "1":
                         (bool, arr) = KnightsTourBacktracking((row, col))
                     else:
@@ -48,7 +68,8 @@ def KnightsTour():
                     
                     message = "success" if bool else "failure"
 
-                    print(f"\nYour run was a {message}.")
+                    print(f"Your run was a {message}.")
+                    print(f"Your final board layout was: ")
                     KnightsTourPrintBoard(arr)
 
             print("Your tour has finished, the program will return to the main menu.\n")
@@ -100,8 +121,8 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
     position_order = [[start_row, start_col]]
 
     while len(positions_to_process):
-        # get current postion data fomr the last element in
-        # the positions_to_process array
+        # get current postion data from the top element in
+        # the positions_to_process queue
         current_row = positions_to_process[0]['row']
         current_col = positions_to_process[0]['col']
         step_count = positions_to_process[0]['step_count']
@@ -120,7 +141,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             # get next possible move
             (add_row, add_col) = possible_moves[next_step_index]
             # create new coordinates by adding the move values
-            # with the current row and y values
+            # with the current row and col values
             new_row = current_row + add_row
             new_col = current_col + add_col
 
@@ -154,7 +175,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             position_order.remove([removed['row'], removed['col']])
 
     # return tuple of:
-    # boolean: if the length of position_order equal the TARGET_STEPS
+    # boolean: if the length of position_order equals the TARGET_STEPS
     # list[list[int]]: the order in which we toured the board
     return (len(position_order) == TARGET_STEPS, position_order)
     
@@ -199,8 +220,8 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
     attempted_positions = []
 
     while len(positions_to_process):
-        # get current postion data fomr the last element in
-        # the positions_to_process array
+        # get current postion data from the top element in
+        # the positions_to_process queue
         current_row = positions_to_process[0]['row']
         current_col = positions_to_process[0]['col']
         step_count = positions_to_process[0]['step_count']
@@ -220,7 +241,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
 
         while loop_for_next_attempt:
             # randomly get the index for the possible moves array
-            index = np.random.randint(0, 8, 1)[0]
+            index = np.random.randint(0, len(possible_moves), 1)[0]
             (row, col) = possible_moves[index]
 
             # if these coordinates have not already been attempted
@@ -232,7 +253,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
                 loop_for_next_attempt = False
 
         # create new coordinates by adding the move values
-        # with the current row and y values
+        # with the current row and col values
         new_row = current_row + add_row
         new_col = current_col + add_col
         
@@ -254,7 +275,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
             attempted_positions = []
 
     # return tuple of:
-    # boolean: if the length of position_order equal the TARGET_STEPS
+    # boolean: if the length of position_order equals the TARGET_STEPS
     # list[list[int]]: the order in which we toured the board
     return (len(position_order) == TARGET_STEPS, position_order)
 
@@ -262,7 +283,9 @@ def KnightsTourPrintBoard(visited: list[list[int]]) -> None:
     # define board of zeros, set all to 0
     board = np.zeros((BOARD_SIZE, BOARD_SIZE), dtype=int)
 
-    # loop termination number
+    # loop termination number, which if the tour is successful,
+    # we want the terminator one less than the length of 
+    # the array as this square will already be filled with a on
     terminator = len(visited) - 1 if TARGET_STEPS == len(visited) else len(visited)
 
     for i in range(0, terminator):
@@ -273,9 +296,43 @@ def KnightsTourPrintBoard(visited: list[list[int]]) -> None:
         board[row][col] = i + 1
 
     # print final board
-    print(f"Your final board layout was: \n{board}\n")
+    print(f"{board}\n")
 
     return
 
-# print(KnightsTourLasVegas((2,2)))
-KnightsTour()
+def KnightsTourSuccessRate(type: str, max: int) -> float:
+    # set a fallback in case the user doesn't supply the correct type
+    if type not in ["Backtracking", "Las Vegas"]:
+        type = "Backtracking"
+
+    # set up array to contain successful runs
+    success_arr = []
+
+    # let the user know the program has started
+    print(f"Starting calculation of success rate for the {type} Knights Tour with {max} run{'s' if max > 1 else ''}.\n")
+
+    # loop up to the max number
+    for i in range(0, max):
+        # get random array on ints from zero to BOARD_SIZE
+        random = np.random.randint(0, BOARD_SIZE, 2)
+
+        # get the boolean value from the
+        if type == "Backtracking":
+            (truthy, _) = KnightsTourBacktracking((random[0], random[1]))
+        else:
+            (truthy, _) = KnightsTourLasVegas((random[0], random[1]))
+
+        # if true, push boolean into the arry
+        if truthy:
+            success_arr.append(truthy)
+
+    # calculate the success rate by dividing the success_rate by the max number
+    # unless the success rate is zero, then just return zero
+    success_rate = len(success_arr) / max if len(success_arr) > 0 else 0
+
+    # print and return success rate
+    print(f"The success rate is: {success_rate}")
+    return success_rate
+
+# KnightsTour()
+KnightsTourSuccessRate("Backtracking", 1)
