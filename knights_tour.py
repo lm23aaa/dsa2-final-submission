@@ -28,6 +28,13 @@ BOARD_AREA = BOARD_SIZE * BOARD_SIZE
 TARGET_STEPS = BOARD_AREA + 1
 
 def KnightsTour() -> None:
+    """
+    Function for users to interact with the main Knight's tour functions in this file.
+
+    Side Effects:
+        - Prints values to the console and requires input from the user
+    """
+
     should_outer_loop = True
 
     print("Welcome to the Knights Tour by Liam Mills.")
@@ -81,6 +88,19 @@ def KnightsTour() -> None:
     print("Thank you for using the Knights Tour by Liam Mills, goodbye!")
 
 def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]:
+    """
+    Function that runs through the closed Knight's tour problem using a backtracking algorithm.
+
+    Args:
+        - startingPosition (tuple[int, int]): Tuple of integers used
+        as the starting position for the program.
+
+    Returns:
+        - tuple[bool, list[list[int]]]: This is a boolean on whether the
+        program has completed the Knight's tour successfully, and a list of
+        the row and column values as ints of the moves the knight made on the tour.
+    """
+
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
 
@@ -180,6 +200,19 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
     return (len(position_order) == TARGET_STEPS, position_order)
     
 def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]:
+    """
+    Function that runs through the closed Knight's tour problem using a Las Vegas algorithm.
+
+    Args:
+        - startingPosition (tuple[int, int]): Tuple of integers used
+        as the starting position for the program.
+
+    Returns:
+        - tuple[bool, list[list[int]]]: This is a boolean on whether the
+        program has completed the Knight's tour successfully, and a list of
+        the row and column values as ints of the moves the knight made on the tour.
+    """
+
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
 
@@ -280,6 +313,18 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
     return (len(position_order) == TARGET_STEPS, position_order)
 
 def KnightsTourPrintBoard(visited: list[list[int]]) -> None:
+    """
+    Function that takes a list of list of ints as positions on the board, and uses them to output in the console a representation of the movements around the board during the Knight's tour.
+
+    Args:
+        - visited (list[list[int]]): List of the row and column values
+        as ints of the moves the knight made on the tour.
+
+    Side Effects:
+        - Prints a matrix depicting the Knight's tour positions as
+        ints in the cells it landed in.
+    """
+    
     # define board of zeros, set all to 0
     board = np.zeros((BOARD_SIZE, BOARD_SIZE), dtype=int)
 
@@ -301,6 +346,23 @@ def KnightsTourPrintBoard(visited: list[list[int]]) -> None:
     return
 
 def KnightsTourSuccessRate(type: str, max: int) -> float:
+    """
+    Function that runs the Knight's tour algorithm repeatedly, with random start positions to determine the success rate of the algorithm.
+
+    Args:
+        - max (integer): Positive integer larger than one, used
+        as the max number of runs in the for loop.
+
+    Returns:
+        - float: The final success rate, of the number of successes
+        divided by the amount of runs (max arguement).
+
+    Side Effects:
+        - Prints messages to the console to let the user know
+        the function is running and to print the success rate 
+        to the console.
+    """
+    
     # set a fallback in case the user doesn't supply the correct type
     if type not in ["Backtracking", "Las Vegas"]:
         type = "Backtracking"
