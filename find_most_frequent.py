@@ -3,7 +3,7 @@ find_most_frequent.py
 
 Author: Liam Mills
 Created: 2025-10-16
-Last Modified: 2025-10-16
+Last Modified: 2025-10-24
 
 Implements functions that find the most frequent words from arrays based on various criteria, and
 other functions to support them.
@@ -13,8 +13,10 @@ Functions:
     frequent word in inputList1 that does not appear in inputList2.
     - findMostFrequentFollower(inputList: list[str], targetWord: str) -> str: Returns a string of the most
     frequent following word of the targetWord, based on the inputList of strings.
-    - findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first") -> str: Returns a string of
-    the key of the item in a dictionary with the highest value.
+    - findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first") -> str: Returns a string of the key of the item in a dictionary with the highest value.
+    - removePunctuationFromString(string: str) -> str: Function to remove all punctuation from a string.
+    - findMostFrequentWordUserInteraction() -> str: Function for user interaction to run the findMostFrequentWord function.
+    - findMostFrequentFollowerUserInteraction() -> str: Function for user interaction to run the findMostFrequentFollower function.
 """
 
 def findMostFrequentWord(inputList1: list[str], inputList2: list[str]) -> str:
@@ -41,6 +43,12 @@ def findMostFrequentWord(inputList1: list[str], inputList2: list[str]) -> str:
     if len(inputList1) == 0 or len(inputList2) == 0:
         print("Err: one or more of the parameters were empty.")
         return "-1"
+    
+    # remove punctuation from user inputs
+    inputList1 = removePunctuationFromString(" ".join(inputList1))
+    inputList1 = inputList1.split(" ")
+    inputList2 = removePunctuationFromString(" ".join(inputList2))
+    inputList2 = inputList2.split(" ")
 
     # create dicionary for count of each string
     string_count = {}
@@ -92,6 +100,11 @@ def findMostFrequentFollower(inputList: list[str], targetWord: str) -> str:
     if len(inputList) == 0 or len(targetWord) == 0:
         print("Err: one or more of the parameters were empty.")
         return "-1" 
+    
+    # remove punctuation from user inputs
+    inputList = removePunctuationFromString(" ".join(inputList))
+    inputList = inputList.split(" ")
+    targetWord = removePunctuationFromString(targetWord)
 
     # create dicionary for count of each string
     string_count = {}
@@ -101,7 +114,7 @@ def findMostFrequentFollower(inputList: list[str], targetWord: str) -> str:
         # if index + 1 doesn't overflow the container and current word
         # at index in inputList equals the target word
         if index + 1 != len(inputList) and inputList[index].lower() == targetWord.lower():
-            # set the next work to a variable
+            # set the next word to a variable
             str = inputList[index + 1].lower()
 
             # up the count of the word in the string_count dictionary
@@ -150,11 +163,90 @@ def findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first")
 
     return array_of_max_values[0 if target == "first" else -1]
 
+def removePunctuationFromString(string: str) -> str:
+    """
+    Function to remove all punctuation from a string.
 
+    Args:
+        - string (string): String for the function to
+        work on.
 
-# print(findMostFrequentWord(['test', 'b', 'test', 'three', 'four', 'fivef', 'b', 'fivef', 'fivef', 'bc'], ['three', 'four', 'fivef']))
+    Returns:
+        - string: The result removing the punctuation from
+        arg string.
+    """
+    
+    if len(string) == 0:
+        return ""
+    
+    # list of all punctuation
+    punctuation = ["!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"] 
+    
+    # remove punctuation from string
+    for item in punctuation:
+        if item in string:
+            string = string.replace(item, "")
 
-# arr = ["This", "is", "the", "way", ".", "The", "way", "is", "shut", ".", "The", "door", "is", "the", "end", "."]
-# print(findMostFrequentFollower(arr, "the"))
-# print(findMostFrequentFollower(arr, "is"))
-# print(findMostFrequentFollower(arr, "door"))
+    # return string, but replace double spaces with a single
+    return string.replace("  ", " ")
+
+def findMostFrequentWordUserInteraction() -> str:
+    """
+    Function for user interaction to run the findMostFrequentWord function.
+
+    Returns:
+        - string: The result of the findMostFrequentWord function.
+
+    Side Effects:
+        - Prints a message with the result for the user.
+    """
+    
+    # assign user input to variables
+    sentence = input("Please input a sentence to inspect: ")
+    sentence_two = input("Please input another sentence to inspect: ")
+
+    # remove punctuation from sentences
+    sentence = removePunctuationFromString(sentence)
+    sentence_two = removePunctuationFromString(sentence_two)
+
+    # run findMostFrequentWord with user input
+    result = findMostFrequentWord(sentence.split(" "), sentence_two.split(" "))
+
+    # print and return result
+    if result != "-1":
+        print(f"The most frequent word in sentence one that does not appear in sentence two is: '{result}'")
+    else: 
+        print(f"There was a problem with the inputs you supplied.")
+    return result
+
+def findMostFrequentFollowerUserInteraction() -> str:
+    """
+    Function for user interaction to run the findMostFrequentFollower function.
+
+    Returns:
+        - string: The result of the findMostFrequentFollower function.
+
+    Side Effects:
+        - Prints a message with the result for the user.
+    """
+    
+    # assign user input to variables
+    sentence = input("Please input a sentence to inspect: ")
+    target = input("Please input a single word to find the most frequent follower from the sentence: ")
+
+    # remove punctuation from sentence
+    sentence = removePunctuationFromString(sentence)
+
+    # run findMostFrequentFollower with user input
+    result = findMostFrequentFollower(sentence.split(" "), target)
+
+    # print and return result
+    if result != "-1":
+        print(f"The most frequent follower of the word '{target}' in your sentence was: '{result}'")
+    else: 
+        print(f"There was a problem with the inputs you supplied.")
+    return result
+
+# run the main functions, with user input
+findMostFrequentWordUserInteraction()
+findMostFrequentFollowerUserInteraction()
