@@ -200,14 +200,12 @@ def findMostFrequentWordUserInteraction() -> str:
     Side Effects:
         - Prints a message with the result for the user.
     """
+
+    print("Welcome to the findMostFrequentWordUserInteraction function.")
     
     # assign user input to variables
     sentence = input("Please input a sentence to inspect: ")
     sentence_two = input("Please input another sentence to inspect: ")
-
-    # remove punctuation from sentences
-    sentence = removePunctuationFromString(sentence)
-    sentence_two = removePunctuationFromString(sentence_two)
 
     # run findMostFrequentWord with user input
     result = findMostFrequentWord(sentence.split(" "), sentence_two.split(" "))
@@ -229,13 +227,12 @@ def findMostFrequentFollowerUserInteraction() -> str:
     Side Effects:
         - Prints a message with the result for the user.
     """
+
+    print("Welcome to the findMostFrequentFollowerUserInteraction function.")
     
     # assign user input to variables
     sentence = input("Please input a sentence to inspect: ")
     target = input("Please input a single word to find the most frequent follower from the sentence: ")
-
-    # remove punctuation from sentence
-    sentence = removePunctuationFromString(sentence)
 
     # run findMostFrequentFollower with user input
     result = findMostFrequentFollower(sentence.split(" "), target)
