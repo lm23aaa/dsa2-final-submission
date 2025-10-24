@@ -7,6 +7,9 @@ Last Modified: 2025-10-23
 
 Implements various functions related to the closed Knight's tour problem.
 
+Dependencies:
+    - NumPy
+
 Functions:
     - KnightsTour() -> None: Function for users to interact with the main Knight's tour functions in this file.
     - KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]: Function that runs through the closed Knight's tour problem using a backtracking algorithm.
@@ -35,46 +38,67 @@ def KnightsTour() -> None:
         - Prints values to the console and requires input from the user
     """
 
+    # initalise main loop variable
     should_outer_loop = True
 
     print("Welcome to the Knights Tour by Liam Mills.")
 
     while should_outer_loop:
         print("Which type would you like to use?")
+        # get input from the client
         tour_type = input("For backtracking, type 1. For Las Vegas, type 2. To exit, type 3: ")
 
+        # test if the input is valid
         if tour_type not in ["1", "2", "3"]:
             print("Error: you entered an incorrect option. The program will retry this step.\n")
         elif tour_type in ["1", "2"]:
+            # initialise inner loop
             should_inner_loop = True
 
             while should_inner_loop:
+                # get the start location data from the user
                 coordinates = input("\nPlease enter the row and column of the starting square, i.e. 0,0: ")
+                
+                # attempt to split the input
                 coordinates_arr = coordinates.split(",")
 
+                # check if the split array doesn't two values
                 if len(coordinates_arr) != 2:
+                    # true, warn the user continue to the next 
+                    # iteration of the inner loop
                     print("Error: you entered an incorrect option. The program will retry this step.\n")
                     continue
                 else:
+                    # try to convert the split array
+                    # contents to ints
                     try:
                         row = int(coordinates_arr[0])
                         col = int(coordinates_arr[1])
                     except:
+                        # on failure, warn the user continue to the next 
+                        # iteration of the inner loop
                         print("Error: you entered an incorrect option. The program will retry this step.\n")
                         continue
-
+                    
+                    # stop inner loop
                     should_inner_loop = False
 
+                    # print the starting depiction of the board
                     print(f"\nYour starting board layout was:")
                     KnightsTourPrintBoard([[row, col]])
 
+                    # run the Knight's tour functions
+                    # based on user input
                     if tour_type == "1":
                         (bool, arr) = KnightsTourBacktracking((row, col))
                     else:
                         (bool, arr) = KnightsTourLasVegas((row, col))
                     
+                    # set whether the function was a succes or
+                    # failure from the boolean the functions return
                     message = "success" if bool else "failure"
 
+                    # print the ending depiction of the board
                     print(f"Your run was a {message}.")
                     print(f"Your final board layout was: ")
                     KnightsTourPrintBoard(arr)
@@ -82,9 +106,11 @@ def KnightsTour() -> None:
             print("Your tour has finished, the program will return to the main menu.\n")
 
         else:
+            # the user typed '3', so they want to exit
+            # break outer loop
             should_outer_loop = False
             break
-
+    
     print("Thank you for using the Knights Tour by Liam Mills, goodbye!")
 
 def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]:
@@ -106,7 +132,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
 
     # array of possible moves the knight can take
     # the knight can move in an L shape of 1 square along
-    # then 2 at a right angle from the first
+    # then 2 at a right angle from the first, or vice versa
     possible_moves = [
         (-1, -2),
         (-2, -1),
@@ -151,11 +177,11 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
         # if set_count equals target steps
         # we are at the end point
         if step_count == TARGET_STEPS:
-            # exit while if it hasn't already
+            # exit the main loop
             break
         
         # if current neighbour index is below the size of
-        # possible_moved array, then there are possible moves
+        # possible_moves array, then there are possible moves
         # to take
         if next_step_index < len(possible_moves):
             # get next possible move
@@ -166,7 +192,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             new_col = current_col + add_col
 
             # up the current elements next_step_index incase we need
-            # to backtrack
+            # to backtrack, or this move is invalid
             positions_to_process[0]['next_step_index'] += 1
             
             # if the new row and col coordinates are possible moves
@@ -218,7 +244,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
 
     # array of possible moves the knight can take
     # the knight can move in an L shape of 1 square along
-    # then 2 at a right angle from the first
+    # then 2 at a right angle from the first, or vice versa
     possible_moves = [
         (-1, -2),
         (-2, -1),
@@ -330,7 +356,7 @@ def KnightsTourPrintBoard(visited: list[list[int]]) -> None:
 
     # loop termination number, which if the tour is successful,
     # we want the terminator one less than the length of 
-    # the array as this square will already be filled with a on
+    # the array as this square will already be filled with a one
     terminator = len(visited) - 1 if TARGET_STEPS == len(visited) else len(visited)
 
     for i in range(0, terminator):
@@ -397,4 +423,4 @@ def KnightsTourSuccessRate(type: str, max: int) -> float:
     return success_rate
 
 # KnightsTour()
-KnightsTourSuccessRate("Backtracking", 1)
+KnightsTourSuccessRate("Las Vegas", 10000)
