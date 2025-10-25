@@ -250,20 +250,19 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
     # col = col value of the current position
     # step_count = step count of the element, used to mark the board,
     # and judge if the loop has got to the end
+    # attempted_positions = array to hold all attempted movements
+    # from current step, based on indexes of POSSIBLE_MOVES
     # 
     positions_to_process = [{
         'row': start_row,
         'col': start_col,
-        'step_count': 1
+        'step_count': 1,
+        'attempted_positions': []
     }]
 
     # positions to return, an array to store the order of the steps
     # to output at the end of the function
     position_order = [[start_row, start_col]]
-
-    # array to hold all attempted movements from current
-    # step, based on POSSIBLE_MOVES values
-    attempted_positions = []
 
     while len(positions_to_process):
         # get current postion data from the top element in
@@ -271,6 +270,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         current_row = positions_to_process[0]['row']
         current_col = positions_to_process[0]['col']
         step_count = positions_to_process[0]['step_count']
+        attempted_positions = positions_to_process[0]['attempted_positions']
         
         # if set_count equals target steps
         # or the POSSIBLE_MOVES have been attempted in 
@@ -294,7 +294,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
             if (int(index) not in attempted_positions):
                 add_row = row
                 add_col = col
-                attempted_positions.append(int(index))
+                positions_to_process[0]['attempted_positions'].append(int(index))
                 loop_for_next_attempt = False
 
         # create new coordinates by adding the move values
@@ -312,12 +312,11 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
             positions_to_process.insert(0, {
                 'row': new_row,
                 'col': new_col,
-                'step_count': step_count + 1
+                'step_count': step_count + 1,
+                'attempted_positions': []
             })
             # add the new coordinates to the position_order array
             position_order.append([new_row, new_col])
-            # empty attempted_positions for next position to process
-            attempted_positions = []
 
     # return tuple of:
     # boolean: if the length of position_order equals the TARGET_STEPS
