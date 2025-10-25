@@ -15,7 +15,7 @@ Functions:
     - KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]: Function that runs through the closed Knight's tour problem using a backtracking algorithm.
     - KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[list[int]]]: Function that runs through the closed Knight's tour problem using a Las Vegas algorithm.
     - KnightsTourPrintBoard(visited: list[list[int]]) -> None: Function that takes a list of list of ints as positions on the board, and uses them to output in the console a representation of the movements around the board during the Knight's tour.
-    - KnightsTourSuccessRate(type: str, max: int) -> float: Function that runs the Knight's tour algorithm repeatedly, with random start positions to determine the success rate of the algorithm.
+    - KnightsTourSuccessRate(type: str, loop_limit: int) -> float: Function that runs the Knight's tour algorithm repeatedly, with random start positions to determine the success rate of the algorithm.
 """
 
 import numpy as np
@@ -356,17 +356,17 @@ def KnightsTourPrintBoard(visited: list[list[int]]) -> None:
 
     return
 
-def KnightsTourSuccessRate(type: str, max: int) -> float:
+def KnightsTourSuccessRate(type: str, loop_limit: int) -> float:
     """
     Function that runs the Knight's tour algorithm repeatedly, with random start positions to determine the success rate of the algorithm.
 
     Args:
-        - max (integer): Positive integer larger than one, used
+        - loop_limit (integer): Positive integer larger than one, used
         as the max number of runs in the for loop.
 
     Returns:
         - float: The final success rate, of the number of successes
-        divided by the amount of runs (max arguement).
+        divided by the amount of runs (loop_limit arguement).
 
     Side Effects:
         - Prints messages to the console to let the user know
@@ -384,8 +384,8 @@ def KnightsTourSuccessRate(type: str, max: int) -> float:
     # let the user know the program has started
     print(f"Starting calculation of success rate for the {type} Knights Tour with {max} run{'s' if max > 1 else ''}.\n")
 
-    # loop up to the max number
-    for i in range(0, max):
+    # loop up to the loop_limit number
+    for i in range(0, loop_limit):
         # get random array on ints from zero to BOARD_SIZE
         random = np.random.randint(0, BOARD_SIZE, 2)
 
@@ -399,9 +399,9 @@ def KnightsTourSuccessRate(type: str, max: int) -> float:
         if truthy:
             success_arr.append(truthy)
 
-    # calculate the success rate by dividing the success_rate by the max number
+    # calculate the success rate by dividing the success_rate by the loop_limit number
     # unless the success rate is zero, then just return zero
-    success_rate = len(success_arr) / max if len(success_arr) > 0 else 0.0
+    success_rate = len(success_arr) / loop_limit if len(success_arr) > 0 else 0.0
 
     # print and return success rate
     print(f"The success rate is: {success_rate}")
