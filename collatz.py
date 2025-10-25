@@ -3,7 +3,7 @@ collatz.py
 
 Author: Liam Mills
 Created: 2025-10-15
-Last Modified: 2025-10-16
+Last Modified: 2025-10-25
 
 Implements recursive and iterative functions related to the Collatz conjecture.
 
@@ -19,9 +19,9 @@ def collatz(n: int) -> int:
     Collatz states that for any positive integer n,
     we can arrive to the integer 1 by following these rules:
         - If n is odd, the function is called again using
-          3n + 1 as the arguement.
+          3n + 1 as the argument.
         - If n is even, the function is called again using
-          n / 2 as the arguement.
+          n / 2 as the argument.
 
     Args:
         - n (integer): Positive integer larger than one.
