@@ -3,7 +3,7 @@ knights_tour.py
 
 Author: Liam Mills
 Created: 2025-10-21
-Last Modified: 2025-10-23
+Last Modified: 2025-10-25
 
 Implements various functions related to the closed Knight's tour problem.
 
@@ -22,13 +22,27 @@ import numpy as np
 
 # CONSTANTS
 # board size (minimum board size is 6 for closed)
-BOARD_SIZE = 6
+BOARD_SIZE = 8
 
 # board area
 BOARD_AREA = BOARD_SIZE * BOARD_SIZE
 
 # target step count
 TARGET_STEPS = BOARD_AREA + 1
+
+# array of possible moves the knight can take
+# the knight can move in an L shape of 1 square along
+# then 2 at a right angle from the first, or vice versa
+POSSIBLE_MOVES = [
+    (-1, -2),
+    (-2, -1),
+    (1, -2),
+    (-2, 1),
+    (-1, 2),
+    (2, -1),
+    (1, 2),
+    (2, 1),
+]
 
 def KnightsTour() -> None:
     """
@@ -130,20 +144,6 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
 
-    # array of possible moves the knight can take
-    # the knight can move in an L shape of 1 square along
-    # then 2 at a right angle from the first, or vice versa
-    possible_moves = [
-        (-1, -2),
-        (-2, -1),
-        (1, -2),
-        (-2, 1),
-        (-1, 2),
-        (2, -1),
-        (1, 2),
-        (2, 1),
-    ]
-
     # positions to process, a queue to process next steps,
     # or if that fails, then the previous step
     # initialised with starting position
@@ -152,7 +152,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
     # col = col value of the current position
     # step_count = step count of the element, used to mark the board,
     # and judge if the loop has got to the end
-    # next_step_index = used as an index for the possible_moves arr,
+    # next_step_index = used as an index for the POSSIBLE_MOVES arr,
     # to get the position of the next move
     # 
     positions_to_process = [{
@@ -181,11 +181,11 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             break
         
         # if current neighbour index is below the size of
-        # possible_moves array, then there are possible moves
+        # POSSIBLE_MOVES array, then there are possible moves
         # to take
-        if next_step_index < len(possible_moves):
+        if next_step_index < len(POSSIBLE_MOVES):
             # get next possible move
-            (add_row, add_col) = possible_moves[next_step_index]
+            (add_row, add_col) = POSSIBLE_MOVES[next_step_index]
             # create new coordinates by adding the move values
             # with the current row and col values
             new_row = current_row + add_row
@@ -212,7 +212,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
                 position_order.append([new_row, new_col])
         else:
             # else, the next_step_index is equal to the len of 
-            # possible_moves array, so there are no moves left to make
+            # POSSIBLE_MOVES array, so there are no moves left to make
             # the current item is not working so we need to backtrack
             # remove this item from positions_to_process
             removed = positions_to_process.pop(0)
@@ -242,20 +242,6 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
 
-    # array of possible moves the knight can take
-    # the knight can move in an L shape of 1 square along
-    # then 2 at a right angle from the first, or vice versa
-    possible_moves = [
-        (-1, -2),
-        (-2, -1),
-        (1, -2),
-        (-2, 1),
-        (-1, 2),
-        (2, -1),
-        (1, 2),
-        (2, 1),
-    ]
-
     # positions to process, a queue to process next steps,
     # or if that fails, then the previous step
     # initialised with starting position
@@ -276,7 +262,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
     position_order = [[start_row, start_col]]
 
     # array to hold all attempted movements from current
-    # step, based on possible_moves values
+    # step, based on POSSIBLE_MOVES values
     attempted_positions = []
 
     while len(positions_to_process):
@@ -287,7 +273,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         step_count = positions_to_process[0]['step_count']
         
         # if set_count equals target steps
-        # or the possible_moves have been attempted in 
+        # or the POSSIBLE_MOVES have been attempted in 
         # attempted_positions, then we are at the end point
         if step_count == TARGET_STEPS or len(attempted_positions) == 8:
             # exit the main loop
@@ -299,9 +285,9 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         add_col = 0
 
         while loop_for_next_attempt:
-            # randomly get the index for the possible_moves array
-            index = np.random.randint(0, len(possible_moves), 1)[0]
-            (row, col) = possible_moves[index]
+            # randomly get the index for the POSSIBLE_MOVES array
+            index = np.random.randint(0, len(POSSIBLE_MOVES), 1)[0]
+            (row, col) = POSSIBLE_MOVES[index]
 
             # if these coordinates have not already been attempted
             # set vars, else the loop will retry
@@ -422,5 +408,4 @@ def KnightsTourSuccessRate(type: str, max: int) -> float:
     print(f"The success rate is: {success_rate}")
     return success_rate
 
-# KnightsTour()
-KnightsTourSuccessRate("Las Vegas", 10000)
+KnightsTour()
