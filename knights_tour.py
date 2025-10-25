@@ -401,7 +401,7 @@ def KnightsTourSuccessRate(type: str, max: int) -> float:
 
     # calculate the success rate by dividing the success_rate by the max number
     # unless the success rate is zero, then just return zero
-    success_rate = len(success_arr) / max if len(success_arr) > 0 else 0
+    success_rate = len(success_arr) / max if len(success_arr) > 0 else 0.0
 
     # print and return success rate
     print(f"The success rate is: {success_rate}")
