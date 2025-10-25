@@ -382,7 +382,7 @@ def KnightsTourSuccessRate(type: str, loop_limit: int) -> float:
     success_arr = []
 
     # let the user know the program has started
-    print(f"Starting calculation of success rate for the {type} Knights Tour with {max} run{'s' if max > 1 else ''}.\n")
+    print(f"Starting calculation of success rate for the {type} Knights Tour with {loop_limit} run{'s' if loop_limit > 1 else ''}.\n")
 
     # loop up to the loop_limit number
     for i in range(0, loop_limit):
