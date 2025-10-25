@@ -34,14 +34,14 @@ TARGET_STEPS = BOARD_AREA + 1
 # the knight can move in an L shape of 1 square along
 # then 2 at a right angle from the first, or vice versa
 POSSIBLE_MOVES = [
-    (-1, -2),
-    (-2, -1),
-    (1, -2),
     (-2, 1),
     (-1, 2),
-    (2, -1),
     (1, 2),
     (2, 1),
+    (2, -1),
+    (1, -2),
+    (-1, -2),
+    (-2, -1),
 ]
 
 def KnightsTour() -> None:
