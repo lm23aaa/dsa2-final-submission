@@ -241,7 +241,7 @@ def findMostFrequentFollowerUserInteraction() -> str:
     if result != "-1":
         print(f"The most frequent follower of the word '{target}' in your sentence was: '{result}'")
     else: 
-        print(f"There was a problem with the inputs you supplied.")
+        print(f"The word '{target}' did not appear in your sentence, so the program could not function.")
     return result
 
 # run the main functions, with user input
