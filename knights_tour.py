@@ -99,7 +99,7 @@ def KnightsTour() -> None:
 
                     # print the starting depiction of the board
                     print(f"\nYour starting board layout was:")
-                    KnightsTourPrintBoard([[row, col]])
+                    KnightsTourPrintBoard([])
 
                     # run the Knight's tour functions
                     # based on user input
@@ -108,7 +108,7 @@ def KnightsTour() -> None:
                     else:
                         (bool, arr) = KnightsTourLasVegas((row, col))
                     
-                    # set whether the function was a succes or
+                    # set whether the function was a success or
                     # failure from the boolean the functions return
                     message = "success" if bool else "failure"
 
