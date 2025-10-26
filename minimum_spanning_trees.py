@@ -16,8 +16,7 @@ Functions:
     - kruskal(graph: nx.Graph) -> None: Takes a NetworkX connected graph, and creates a minimum spanning tree
     with matplotlib.pyplot.
     - getEdgesWeight(edge) -> None: Takes NetworkX EdgeDataView data and returns the weight from the tuple
-    - drawAndShowGraph(G: nx.Graph, edge_color: str, title: str) -> None: Takes a NetworkX graph data and adds styles,
-    before outputting to the screen with matplotlib.pyplot
+    - drawAndShowGraph(G: nx.Graph, edge_color: str, title: str) -> None: Takes a NetworkX graph data and adds styles, before outputting to the screen with matplotlib.pyplot
 """
 
 import networkx as nx
