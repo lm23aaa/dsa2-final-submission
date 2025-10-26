@@ -71,7 +71,7 @@ def KnightsTour() -> None:
 
             while should_inner_loop:
                 # get the start location data from the user
-                coordinates = input("\nPlease enter the row and column of the starting square, i.e. 0,0: ")
+                coordinates = input("\nPlease enter the row and column of the starting square as two comma separated integers, i.e. 0,0: ")
                 
                 # attempt to split the input
                 coordinates_arr = coordinates.split(",")
