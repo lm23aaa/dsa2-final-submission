@@ -273,9 +273,9 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         attempted_positions = positions_to_process[0]['attempted_positions']
         
         # if set_count equals target steps
-        # or the POSSIBLE_MOVES have been attempted in 
+        # or all the POSSIBLE_MOVES have been attempted in 
         # attempted_positions, then we are at the end point
-        if step_count == TARGET_STEPS or len(attempted_positions) == 8:
+        if step_count == TARGET_STEPS or len(attempted_positions) == len(POSSIBLE_MOVES):
             # exit the main loop
             break
         
