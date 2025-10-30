@@ -3,7 +3,7 @@ minimum_spanning_trees.py
 
 Author: Liam Mills
 Created: 2025-10-16
-Last Modified: 2025-10-19
+Last Modified: 2025-10-30
 
 Implements functions to work out the minimum spanning trees with famous algorithm(s), and supporting functions
 for them.
@@ -94,7 +94,7 @@ def kruskal(graph: nx.Graph) -> None:
             drawAndShowGraph(mst, title=mst_title)
             
         else:
-            # false, remove the node we just added
+            # false, remove the edge we just added
             mst.remove_edge(node_one, node_two)
 
             # for each of the nodes connected to our edge
