@@ -3,7 +3,7 @@ find_most_frequent.py
 
 Author: Liam Mills
 Created: 2025-10-16
-Last Modified: 2025-10-24
+Last Modified: 2025-10-30
 
 Implements functions that find the most frequent words from arrays based on various criteria, and
 other functions to support them.
@@ -96,7 +96,7 @@ def findMostFrequentFollower(inputList: list[str], targetWord: str) -> str:
         - Prints error messages to the console.
     """
 
-    # if input arrays don't contain values, return error code
+    # if inputs don't contain values, return error code
     if len(inputList) == 0 or len(targetWord) == 0:
         print("Err: one or more of the parameters were empty.")
         return "-1" 
@@ -135,7 +135,7 @@ def findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first")
 
     Args:
         - dictionary (dictionary): Dictionary with string keys and int values.
-        target (string): String with the value of first or last, to
+        - target (string): String with the value of first or last, to
         target the output position.
 
     Returns:
@@ -158,7 +158,7 @@ def findMaxValueFromDictionaryOfNumbers(dictionary: dict, target: str = "first")
     # get max value in variable
     max_value = dictionary[max(dictionary, key=dictionary.get)]
 
-    # create a list by subtracking all items of inputList2 from inputList1
+    # create a list of the keys from the dictionary where the value equals max_value
     array_of_max_values = [key for key, value in dictionary.items() if value == max_value]
 
     return array_of_max_values[0 if target == "first" else -1]
