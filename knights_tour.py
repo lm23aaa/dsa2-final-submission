@@ -3,7 +3,7 @@ knights_tour.py
 
 Author: Liam Mills
 Created: 2025-10-21
-Last Modified: 2025-10-25
+Last Modified: 2025-10-30
 
 Implements various functions related to the closed Knight's tour problem.
 
@@ -174,13 +174,13 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
         step_count = positions_to_process[0]['step_count']
         next_step_index = positions_to_process[0]['next_step_index']
         
-        # if set_count equals target steps
+        # if step_count equals target steps
         # we are at the end point
         if step_count == TARGET_STEPS:
             # exit the main loop
             break
         
-        # if current neighbour index is below the size of
+        # if index is below the size of
         # POSSIBLE_MOVES array, then there are possible moves
         # to take
         if next_step_index < len(POSSIBLE_MOVES):
@@ -196,7 +196,6 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
             positions_to_process[0]['next_step_index'] += 1
             
             # if the new row and col coordinates are possible moves
-            # and the coordinate on the board is zero
             # OR, the tour is at the last step, and that it is going back to the 
             # first spot
             if (new_row >= 0 and new_col >= 0 and new_row < BOARD_SIZE and new_col < BOARD_SIZE and [new_row,new_col] not in position_order) or (step_count == BOARD_AREA and new_row == start_row and new_col == start_col):
@@ -272,7 +271,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         step_count = positions_to_process[0]['step_count']
         attempted_positions = positions_to_process[0]['attempted_positions']
         
-        # if set_count equals target steps
+        # if step_count equals target steps
         # or all the POSSIBLE_MOVES have been attempted in 
         # attempted_positions, then we are at the end point
         if step_count == TARGET_STEPS or len(attempted_positions) == len(POSSIBLE_MOVES):
@@ -303,7 +302,6 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
         new_col = current_col + add_col
         
         # if the new row and col coordinates are possible moves
-        # and the coordinate on the board is zero
         # OR, the tour is at the last step, and that it is going back to the 
         # first spot
         if (new_row >= 0 and new_col >= 0 and new_row < BOARD_SIZE and new_col < BOARD_SIZE and [new_row,new_col] not in position_order) or (step_count == BOARD_AREA and new_row == start_row and new_col == start_col):
@@ -389,13 +387,13 @@ def KnightsTourSuccessRate(type: str, loop_limit: int) -> float:
         # get random array on ints from zero to BOARD_SIZE
         random = np.random.randint(0, BOARD_SIZE, 2)
 
-        # get the boolean value from the
+        # get the boolean value from the functions
         if type == "Backtracking":
             (truthy, _) = KnightsTourBacktracking((random[0], random[1]))
         else:
             (truthy, _) = KnightsTourLasVegas((random[0], random[1]))
 
-        # if true, push boolean into the arry
+        # if true, push boolean into the array
         if truthy:
             success_arr.append(truthy)
 
