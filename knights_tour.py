@@ -3,7 +3,7 @@ knights_tour.py
 
 Author: Liam Mills
 Created: 2025-10-21
-Last Modified: 2025-10-30
+Last Modified: 2025-10-31
 
 Implements various functions related to the closed Knight's tour problem.
 
@@ -144,7 +144,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
 
-    # positions to process, a queue to process next steps,
+    # positions to process, a stack to process next steps,
     # or if that fails, then the previous step
     # initialised with starting position
     #
@@ -168,7 +168,7 @@ def KnightsTourBacktracking(startingPosition: tuple[int, int]) -> tuple[bool, li
 
     while len(positions_to_process):
         # get current postion data from the top element in
-        # the positions_to_process queue
+        # the positions_to_process stack
         current_row = positions_to_process[0]['row']
         current_col = positions_to_process[0]['col']
         step_count = positions_to_process[0]['step_count']
@@ -241,7 +241,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
     # row and col coordinates from user defined starting postion
     (start_row, start_col) = startingPosition
 
-    # positions to process, a queue to process next steps,
+    # positions to process, a stack to process next steps,
     # or if that fails, then the previous step
     # initialised with starting position
     #
@@ -265,7 +265,7 @@ def KnightsTourLasVegas(startingPosition: tuple[int, int]) -> tuple[bool, list[l
 
     while len(positions_to_process):
         # get current postion data from the top element in
-        # the positions_to_process queue
+        # the positions_to_process stack
         current_row = positions_to_process[0]['row']
         current_col = positions_to_process[0]['col']
         step_count = positions_to_process[0]['step_count']
