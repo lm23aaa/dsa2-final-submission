@@ -3,7 +3,7 @@ minimum_spanning_trees.py
 
 Author: Liam Mills
 Created: 2025-10-16
-Last Modified: 2025-10-30
+Last Modified: 2025-11-1
 
 Implements functions to work out the minimum spanning trees with famous algorithm(s), and supporting functions
 for them.
@@ -15,7 +15,7 @@ Dependencies:
 Functions:
     - kruskal(graph: nx.Graph) -> None: Takes a NetworkX connected graph, and creates a minimum spanning tree
     with matplotlib.pyplot.
-    - getEdgesWeight(edge) -> None: Takes NetworkX EdgeDataView data and returns the weight from the tuple
+    - sortEdgesByWeight(arr: list[tuple[str, str, dict[str, int]]]) -> list[tuple[str, str, dict[str, int]]]: A function to sort a list of edges from lowest to highest
     - drawAndShowGraph(G: nx.Graph, edge_color: str, title: str) -> None: Takes a NetworkX graph data and adds styles, before outputting to the screen with matplotlib.pyplot
 """
 
@@ -45,7 +45,7 @@ def kruskal(graph: nx.Graph) -> None:
     drawAndShowGraph(graph, "#0000ff", "Original Connected Graph")
 
     # Get edges from graph, put them in sorted order
-    sorted_edges = sorted(graph.edges(data=True), key=getEdgesWeight)
+    sorted_edges = sortEdgesByWeight(list(graph.edges(data=True)))
     
     # Get the amount of nodes in the mst
     mst_node_target = len(graph.nodes())
@@ -120,16 +120,37 @@ def kruskal(graph: nx.Graph) -> None:
     # return None from the function
     return
 
-def getEdgesWeight(edge) -> int:
+def sortEdgesByWeight(arr: list[tuple[str, str, dict[str, int]]]) -> list[tuple[str, str, dict[str, int]]]:
     """
-    A function that takes NetworkX EdgeDataView data and
-    returns the weight from the tuple for the sorted function.
+    A function to sort a list of edges from lowest to highest, based on selection sort
 
     Args:
-        - edge (EdgeDataView): NetworkX EdgeDataView data.
+        - arr (list[tuple[str, str, dict[str, int]]]): A list of NetworkX edges with their weights.
+
+    Returns:
+        - list[tuple[str, str, dict[str, int]]]: A sorted list of NetworkX edges with their weights.
     """
 
-    return edge[2].get("weight")
+    # start n at zero
+    n = 0
+
+    # keep looping till n equals one less than the length of arr
+    while n < len(arr) - 1:
+        # loop i from n + 1 till the end of the arr
+        for i in range(n + 1, len(arr)):
+            # desctructure array element data
+            (_, _, n_data) = arr[n]
+            (_, _, i_data) = arr[i]
+
+            # if n weight is higher than i weight, switch the order in the array
+            if n_data["weight"] > i_data["weight"]:
+                arr[n], arr[i] = arr[i], arr[n]
+        
+        # increment n
+        n += 1
+    
+    # return sorted array
+    return arr
 
 def drawAndShowGraph(G: nx.Graph, edge_color: str = "#ff0000", title: str = "") -> None:
     """
