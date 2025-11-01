@@ -190,7 +190,6 @@ def drawAndShowGraph(G: nx.Graph, edge_color: str = "#ff0000", title: str = "") 
 
     return
 
-
 # undirected graph
 G = nx.Graph()
 
