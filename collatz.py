@@ -3,7 +3,7 @@ collatz.py
 
 Author: Liam Mills
 Created: 2025-10-15
-Last Modified: 2025-10-25
+Last Modified: 2025-11-1
 
 Implements recursive and iterative functions related to the Collatz conjecture.
 
@@ -47,3 +47,8 @@ def collatz(n: int) -> int:
     else: 
         print(f"n={n}.")
         return collatz(3 * n + 1)
+
+# test code is working  
+for n in range(-1, 6):
+    print(f"Starting collatz function with n={n}: ")
+    collatz(n)
