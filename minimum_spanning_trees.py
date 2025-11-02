@@ -3,7 +3,7 @@ minimum_spanning_trees.py
 
 Author: Liam Mills
 Created: 2025-10-16
-Last Modified: 2025-11-1
+Last Modified: 2025-11-2
 
 Implements functions to work out the minimum spanning trees with famous algorithm(s), and supporting functions
 for them.
@@ -138,7 +138,7 @@ def sortEdgesByWeight(arr: list[tuple[str, str, dict[str, int]]]) -> list[tuple[
     while n < len(arr) - 1:
         # loop i from n + 1 till the end of the arr
         for i in range(n + 1, len(arr)):
-            # desctructure array element data
+            # destructure array element data
             (_, _, n_data) = arr[n]
             (_, _, i_data) = arr[i]
 
